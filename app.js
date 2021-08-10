@@ -6,7 +6,7 @@ const audioElement = document.getElementById("audio");
 async function getJokes() {
     let text = ''
     try {
-        const response = await fetch("https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart")
+        const response = await fetch("https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit")
         const data = await response.json()
         if (data.setup) {
             text = `${data.setup} ... ${data.delivery}`
@@ -25,10 +25,11 @@ async function getJokes() {
 
 //Passing Joke text to speech 
 function tellMeJoke(text) {
+    let textToSpeech = text.trim().replace(/ /g, '%20');
     console.log(text)
     VoiceRSS.speech({
         key: 'c78ac54d8a474ab191435006989350a6',
-        src: `${text}`,
+        src: `${textToSpeech}`,
         hl: 'en-us',
         v: 'Linda',
         r: 0,
